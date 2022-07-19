@@ -16,8 +16,13 @@ defmodule OportunidadesWeb.Router do
 
   scope "/", OportunidadesWeb do
     pipe_through :browser
-
     get "/", PageController, :index
+  end
+
+
+  scope "/cliente", OportunidadesWeb do
+    pipe_through :api
+    resources "/", ClienteController
   end
 
   # Other scopes may use custom stacks.
