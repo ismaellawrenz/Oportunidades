@@ -1,4 +1,4 @@
-defmodule Oportunidades.Comercial do
+defmodule Oportunidades.Cliente do
   @moduledoc """
   The Comercial context.
   """
@@ -35,7 +35,7 @@ defmodule Oportunidades.Comercial do
       ** (Ecto.NoResultsError)
 
   """
-  def get_cliente!(id), do: Repo.get!(Cliente, id)
+  def get_cliente!(id), do: Repo.get!(Cliente, id) |> Repo.preload([:enderecos, enderecos: [:cidade]])
 
   @doc """
   Creates a cliente.

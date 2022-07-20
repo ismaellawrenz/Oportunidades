@@ -19,7 +19,26 @@ defmodule OportunidadesWeb.ClienteView do
       nomeFantasia: cliente.nomeFantasia,
       origem: cliente.origem,
       telefones: cliente.telefones,
-      emails: cliente.emails
+      emails: cliente.emails,
+      enderecos: render_many(cliente.enderecos, ClienteView, "endereco.json", as: :endereco)
+    }
+  end
+
+  def render("endereco.json", %{endereco: endereco})do
+    %{
+      id: endereco.id,
+      cep: endereco.cep,
+      numero: endereco.numero,
+      logradouro: endereco.logradouro,
+      bairro: endereco.bairro,
+      complemento: endereco.complemento,
+      situacao: endereco.situacao,
+      cidade: %{
+        id: endereco.cidade.id,
+        ibge: endereco.cidade.ibge,
+        uf: endereco.cidade.uf,
+        nome: endereco.cidade.nome
+      }
     }
   end
 end

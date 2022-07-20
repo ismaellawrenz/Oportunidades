@@ -22,7 +22,8 @@ defmodule OportunidadesWeb.Router do
 
   scope "/cliente", OportunidadesWeb do
     pipe_through :api
-    resources "/", ClienteController
+    resources "/", ClienteController,  only: [:index, :show, :create, :delete]
+    put "/", ClienteController, :update
   end
 
   # Other scopes may use custom stacks.

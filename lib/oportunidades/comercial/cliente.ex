@@ -1,6 +1,7 @@
 defmodule Oportunidades.Comercial.Cliente do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Oportunidades.Comercial.Endereco
   @primary_key {:id, Ecto.UUID, autogenerate: true}
 
   schema "cliente" do
@@ -11,7 +12,7 @@ defmodule Oportunidades.Comercial.Cliente do
     field :origem, :integer
     field :origemDescricao, :string
     field :telefones, {:array, :string}
-
+    has_many(:enderecos, Endereco)
     timestamps()
   end
 
@@ -20,5 +21,6 @@ defmodule Oportunidades.Comercial.Cliente do
     cliente
     |> cast(attrs, [:nome, :cnpj, :origemDescricao, :nomeFantasia, :origem, :telefones, :emails])
     |> validate_required([:nome])
+    |> cast_assoc(:enderecos)
   end
 end
