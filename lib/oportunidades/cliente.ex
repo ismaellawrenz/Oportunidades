@@ -21,6 +21,11 @@ defmodule Oportunidades.Cliente do
     Repo.all(Cliente)
   end
 
+  def pesquisa (pesquisa) do
+    Repo.all(from(a in Cliente, where: like(a.nome, ^"#{pesquisa}%") or like(a.cnpj, ^"#{pesquisa}%")))
+    |> Repo.preload([:enderecos, enderecos: [:cidade]])
+  end
+
   @doc """
   Gets a single cliente.
 

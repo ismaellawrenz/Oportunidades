@@ -24,6 +24,7 @@ defmodule OportunidadesWeb.Router do
     pipe_through :api
     resources "/", ClienteController,  only: [:index, :show, :create, :delete]
     put "/", ClienteController, :update
+    get "/pesquisa/:pesquisa", ClienteController, :pesquisa
   end
 
   # Other scopes may use custom stacks.

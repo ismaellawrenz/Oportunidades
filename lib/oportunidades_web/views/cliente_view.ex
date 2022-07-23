@@ -2,8 +2,8 @@ defmodule OportunidadesWeb.ClienteView do
   use OportunidadesWeb, :view
   alias OportunidadesWeb.ClienteView
 
-  def render("index.json", %{cliente: cliente}) do
-    %{data: render_many(cliente, ClienteView, "cliente.json")}
+  def render("clientes.json", %{cliente: cliente}) do
+     render_many(cliente, ClienteView, "cliente.json")
   end
 
   def render("show.json", %{cliente: cliente}) do

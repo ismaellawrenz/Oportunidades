@@ -25,6 +25,11 @@ defmodule OportunidadesWeb.ClienteController do
     render(conn, "cliente.json", cliente: cliente)
   end
 
+  def pesquisa(conn, %{"pesquisa" => pesquisa_param}) do
+    cliente = ClienteRepo.pesquisa(pesquisa_param)
+    render(conn, "clientes.json", cliente: cliente)
+  end
+
   def update(conn, cliente_params) do
     cliente = ClienteRepo.get_cliente!(cliente_params["id"])
 
