@@ -27,6 +27,13 @@ defmodule OportunidadesWeb.Router do
     get "/pesquisa/:pesquisa", ClienteController, :pesquisa
   end
 
+  scope "/produto", OportunidadesWeb do
+    pipe_through :api
+    get "/all", ProdutoController, :index
+    get "/pesquisa/:pesquisa", ProdutoController, :pesquisa
+    post "/", ProdutoController, :create
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", OportunidadesWeb do
   #   pipe_through :api
