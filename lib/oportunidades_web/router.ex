@@ -34,6 +34,16 @@ defmodule OportunidadesWeb.Router do
     post "/", ProdutoController, :create
   end
 
+  scope "/etapa", OportunidadesWeb do
+    pipe_through :api
+    get "/all", EtapaController, :index
+    resources "/", EtapaController,  only: [:show, :create, :delete]
+    put "/", EtapaController, :update
+    put "/alterarSequencia", EtapaController, :alterar_sequencia
+  end
+
+
+
   # Other scopes may use custom stacks.
   # scope "/api", OportunidadesWeb do
   #   pipe_through :api
