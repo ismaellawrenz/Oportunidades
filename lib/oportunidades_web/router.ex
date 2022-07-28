@@ -43,6 +43,13 @@ defmodule OportunidadesWeb.Router do
   end
 
 
+  scope "/usuario", OportunidadesWeb do
+    pipe_through :api
+    resources "/", UsuarioController,  only: [:show, :create, :delete]
+    put "/", UsuarioController, :update
+
+  end
+
 
   # Other scopes may use custom stacks.
   # scope "/api", OportunidadesWeb do
