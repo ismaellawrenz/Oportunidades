@@ -2,6 +2,7 @@ defmodule Oportunidades.Usuarios.Usuario do
   use Ecto.Schema
   import Ecto.Changeset
   @primary_key {:id, Ecto.UUID, autogenerate: true}
+  alias Oportunidades.Negocios.Oportunidade
 
   schema "usuario" do
     field :funcao, :string
@@ -9,7 +10,7 @@ defmodule Oportunidades.Usuarios.Usuario do
     field :nome, :string
     field :senha, :string
     field :situacao, :boolean, default: false
-
+    has_many(:oportunidade, Oportunidade, foreign_key: :responsavel_id)
     timestamps()
   end
 
