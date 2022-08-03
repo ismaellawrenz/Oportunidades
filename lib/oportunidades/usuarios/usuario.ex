@@ -27,6 +27,6 @@ defmodule Oportunidades.Usuarios.Usuario do
   end
 
   defp put_pass_hash(%Ecto.Changeset{valid?: true, changes: %{senha: senha}} = changeset) do
-    change(changeset, Pbkdf2.add_hash(senha))
+    change(changeset, %{senha: Pbkdf2.add_hash(senha).password_hash})
   end
 end
