@@ -51,7 +51,7 @@ defmodule Oportunidades.Negocios do
   """
   def create_oportunidade(attrs \\ %{}) do
     %Oportunidade{}
-    |> Oportunidade.changeset(attrs)
+    |> Oportunidade.changeset_create(attrs)
     |> Repo.insert()
   end
 

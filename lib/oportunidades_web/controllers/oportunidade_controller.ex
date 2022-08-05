@@ -11,8 +11,8 @@ defmodule OportunidadesWeb.OportunidadeController do
     render(conn, "index.json", oportunidades: oportunidades)
   end
 
-  def create(conn, %{"oportunidade" => oportunidade_params}) do
-    with {:ok, %Oportunidade{} = oportunidade} <- Negocios.create_oportunidade(oportunidade_params) do
+  def create(conn, oportunidade_params) do
+    with {:ok, %Oportunidade{}  = oportunidade} <- Negocios.create_oportunidade(oportunidade_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.oportunidade_path(conn, :show, oportunidade))
@@ -25,8 +25,8 @@ defmodule OportunidadesWeb.OportunidadeController do
     render(conn, "show.json", oportunidade: oportunidade)
   end
 
-  def update(conn, %{"id" => id, "oportunidade" => oportunidade_params}) do
-    oportunidade = Negocios.get_oportunidade!(id)
+  def update(conn, oportunidade_params) do
+    oportunidade = Negocios.get_oportunidade!(oportunidade_params["id"])
 
     with {:ok, %Oportunidade{} = oportunidade} <- Negocios.update_oportunidade(oportunidade, oportunidade_params) do
       render(conn, "show.json", oportunidade: oportunidade)

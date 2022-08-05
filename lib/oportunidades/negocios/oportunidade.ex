@@ -2,6 +2,10 @@ defmodule Oportunidades.Negocios.Oportunidade do
   use Ecto.Schema
   import Ecto.Changeset
   @primary_key {:id, Ecto.UUID, autogenerate: true}
+  alias Oportunidades.Comercial.Cliente
+  alias Oportunidades.Etapas.Etapa
+  alias Oportunidades.Usuarios.Usuario
+
 
   schema "oportunidades" do
     field :data_conclusao, :date
@@ -25,8 +29,30 @@ defmodule Oportunidades.Negocios.Oportunidade do
   @doc false
   def changeset(oportunidade, attrs) do
     oportunidade
-    |> cast(attrs, [:probabilidade, :situacao, :sequencia, :nome, :observacao, :motivoPerda, :total_unico, :total_mensal, :total_anual, :previsao_venda, :data_conclusao])
+    |> cast(attrs, [:probabilidade, :situacao, :sequencia, :nome, :observacao, :motivoPerda, :total_unico, :total_mensal, :total_anual, :previsao_venda, :data_conclusao, :cliente_id])
     |> validate_required([:nome])
-    |> cast_assoc([:etapa, :cliente, :responsavel])
+    |> cast_assoc(:etapa)
+    |> cast_assoc(:cliente)
+    |> cast_assoc(:responsavel)
   end
+
+  def changeset_create(oportunidade, attrs) do
+    oportunidade
+    |> cast(attrs, [:probabilidade, :situacao, :sequencia, :nome, :observacao, :motivoPerda, :total_unico, :total_mensal, :total_anual, :previsao_venda, :data_conclusao, :cliente_id])
+    |> validate_required([:nome])
+    |> cast_assoc(:etapa)
+    |> cast_assoc(:cliente)
+    |> cast_assoc(:responsavel)
+    |> ajustar_cliente(:cliente, :cliente_id)
+  end
+
+  defp ajustar_cliente(changeset, %{cliente: cliente}, cliente_id) do
+    if cliente.id != nil do
+      put_change(changeset, :cliente_id, cliente.id)
+      put_change(changeset, :cliente, nil)
+    else
+      changeset
+    end
+  end
+
 end

@@ -42,6 +42,14 @@ defmodule OportunidadesWeb.Router do
     put "/alterarSequencia", EtapaController, :alterar_sequencia
   end
 
+  scope "/oportunidade", OportunidadesWeb do
+    pipe_through :api
+    get "/all", OportunidadeController, :index
+    resources "/", OportunidadeController,  only: [:show, :create, :delete]
+    put "/", OportunidadeController, :update
+    put "/alterarSequencia", OportunidadeController, :alterar_sequencia
+  end
+
 
   scope "/usuario", OportunidadesWeb do
     pipe_through :api

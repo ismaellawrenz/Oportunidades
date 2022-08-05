@@ -3,11 +3,11 @@ defmodule OportunidadesWeb.OportunidadeView do
   alias OportunidadesWeb.OportunidadeView
 
   def render("index.json", %{oportunidades: oportunidades}) do
-    %{data: render_many(oportunidades, OportunidadeView, "oportunidade.json")}
+     render_many(oportunidades, OportunidadeView, "oportunidade.json")
   end
 
   def render("show.json", %{oportunidade: oportunidade}) do
-    %{data: render_one(oportunidade, OportunidadeView, "oportunidade.json")}
+     render_one(oportunidade, OportunidadeView, "oportunidade.json")
   end
 
   def render("oportunidade.json", %{oportunidade: oportunidade}) do
@@ -23,7 +23,16 @@ defmodule OportunidadesWeb.OportunidadeView do
       total_mensal: oportunidade.total_mensal,
       total_anual: oportunidade.total_anual,
       previsao_venda: oportunidade.previsao_venda,
-      data_conclusao: oportunidade.data_conclusao
+      data_conclusao: oportunidade.data_conclusao,
+      #cliente: render_one(oportunidade.cliente, OportunidadeView, "cliente.json", as: :cliente)
     }
+  end
+
+  def render("cliente.json", %{cliente: cliente}) do
+    %{
+      id: cliente.id,
+      nome: cliente.nome
+    }
+
   end
 end
