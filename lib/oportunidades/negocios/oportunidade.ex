@@ -43,12 +43,14 @@ defmodule Oportunidades.Negocios.Oportunidade do
     |> cast_assoc(:etapa)
     |> cast_assoc(:cliente)
     |> cast_assoc(:responsavel)
-    |> ajustar_cliente(:cliente, :cliente_id)
+    |> ajustar_cliente()
   end
 
-  defp ajustar_cliente(changeset, %{cliente: cliente}, cliente_id) do
-    if cliente.id != nil do
-      put_change(changeset, :cliente_id, cliente.id)
+  def ajustar_cliente(changeset) do
+    name = get_field(changeset, :cliente)
+
+
+    if name.id == nil do
       put_change(changeset, :cliente, nil)
     else
       changeset

@@ -50,9 +50,25 @@ defmodule Oportunidades.Negocios do
 
   """
   def create_oportunidade(attrs \\ %{}) do
+
+    if(attrs["cliente"]["id"] != nil) do
+      IO.puts("entrou")
+      attrs = put_in(attrs[:cliente_id], attrs["cliente"]["id"])
+     attrs = put_in(attrs, [:cliente], nil)
+      IO.puts("id#{attrs["cliente"]}")
+    end
+    IO.puts("nao entrou entrou")
+
+
+
+
+    oportunidade =
     %Oportunidade{}
-    |> Oportunidade.changeset_create(attrs)
-    |> Repo.insert()
+    |> Oportunidade.changeset(attrs)
+
+
+
+   |> Repo.insert()
   end
 
   @doc """
