@@ -5,6 +5,7 @@ defmodule Oportunidades.Negocios do
 
   import Ecto.Query, warn: false
   alias Oportunidades.Repo
+  import Ecto.Changeset
 
   alias Oportunidades.Negocios.Oportunidade
 
@@ -51,24 +52,20 @@ defmodule Oportunidades.Negocios do
   """
   def create_oportunidade(attrs \\ %{}) do
 
-    if(attrs["cliente"]["id"] != nil) do
-      IO.puts("entrou")
-      attrs = put_in(attrs[:cliente_id], attrs["cliente"]["id"])
-     attrs = put_in(attrs, [:cliente], nil)
-      IO.puts("id#{attrs["cliente"]}")
+    if attrs["cliente"]["id"] == nil do
+      %Oportunidade{}
+      |> Oportunidade.changeset_create_cliente(attrs)
+      |> Repo.insert()
+    else
+      cha=
+      %Oportunidade{}
+      |> Oportunidade.changeset_create(attrs)
+      |> put_change(:cliente_id, attrs["cliente"]["id"])
+      |> Repo.insert()
+      #Map.put(cha.cliente, :cliente, %{id: 123})
+      #|> IO.inspect()
     end
-    IO.puts("nao entrou entrou")
 
-
-
-
-    oportunidade =
-    %Oportunidade{}
-    |> Oportunidade.changeset(attrs)
-
-
-
-   |> Repo.insert()
   end
 
   @doc """

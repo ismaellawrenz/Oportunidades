@@ -20,7 +20,7 @@ defmodule Oportunidades.Negocios.Oportunidade do
     field :total_mensal, :decimal
     field :total_unico, :decimal
     belongs_to :etapa, Etapa, type: :binary_id
-    belongs_to :cliente, Cliente, type: :binary_id
+    belongs_to :cliente, Cliente, type: :binary_id, on_replace: :update
     belongs_to :responsavel, Usuario, type: :binary_id
 
     timestamps()
@@ -36,15 +36,25 @@ defmodule Oportunidades.Negocios.Oportunidade do
     |> cast_assoc(:responsavel)
   end
 
+  def changeset_create_cliente(oportunidade, attrs) do
+    oportunidade
+    |> cast(attrs, [:probabilidade, :situacao, :sequencia, :nome, :observacao, :motivoPerda, :total_unico, :total_mensal, :total_anual, :previsao_venda, :data_conclusao])
+    |> validate_required([:nome])
+    |> cast_assoc(:etapa)
+    |> cast_assoc(:cliente)
+    |> cast_assoc(:responsavel)
+
+  end
   def changeset_create(oportunidade, attrs) do
     oportunidade
     |> cast(attrs, [:probabilidade, :situacao, :sequencia, :nome, :observacao, :motivoPerda, :total_unico, :total_mensal, :total_anual, :previsao_venda, :data_conclusao, :cliente_id])
     |> validate_required([:nome])
     |> cast_assoc(:etapa)
-    |> cast_assoc(:cliente)
     |> cast_assoc(:responsavel)
-    |> ajustar_cliente()
+
   end
+
+
 
   def ajustar_cliente(changeset) do
     name = get_field(changeset, :cliente)
