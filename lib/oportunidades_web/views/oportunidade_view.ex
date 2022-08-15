@@ -24,15 +24,31 @@ defmodule OportunidadesWeb.OportunidadeView do
       total_anual: oportunidade.total_anual,
       previsao_venda: oportunidade.previsao_venda,
       data_conclusao: oportunidade.data_conclusao,
-      #cliente: render_one(oportunidade.cliente, OportunidadeView, "cliente.json", as: :cliente)
+      cliente: render_one(oportunidade.cliente, OportunidadeView, "cliente.json", as: :cliente),
+      etapa: render_one(oportunidade.etapa, OportunidadeView, "etapa.json", as: :etapa),
+      responsavel: render_one(oportunidade.responsavel, OportunidadeView, "responsavel.json", as: :responsavel)
     }
   end
+
 
   def render("cliente.json", %{cliente: cliente}) do
     %{
       id: cliente.id,
       nome: cliente.nome
     }
+  end
 
+  def render("etapa.json", %{etapa: etapa}) do
+    %{
+      id: etapa.id,
+      descricao: etapa.descricao
+    }
+  end
+
+  def render("responsavel.json", %{responsavel: responsavel}) do
+    %{
+      id: responsavel.id,
+      nome: responsavel.nome
+    }
   end
 end

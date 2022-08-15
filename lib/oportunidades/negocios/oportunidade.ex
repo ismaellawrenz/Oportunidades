@@ -36,35 +36,40 @@ defmodule Oportunidades.Negocios.Oportunidade do
     |> cast_assoc(:responsavel)
   end
 
-  def changeset_create_cliente(oportunidade, attrs) do
+
+  def changeset_create(oportunidade, attrs) do
     oportunidade
     |> cast(attrs, [:probabilidade, :situacao, :sequencia, :nome, :observacao, :motivoPerda, :total_unico, :total_mensal, :total_anual, :previsao_venda, :data_conclusao])
     |> validate_required([:nome])
-    |> cast_assoc(:etapa)
-    |> cast_assoc(:cliente)
-    |> cast_assoc(:responsavel)
-
-  end
-  def changeset_create(oportunidade, attrs) do
-    oportunidade
-    |> cast(attrs, [:probabilidade, :situacao, :sequencia, :nome, :observacao, :motivoPerda, :total_unico, :total_mensal, :total_anual, :previsao_venda, :data_conclusao, :cliente_id])
-    |> validate_required([:nome])
-    |> cast_assoc(:etapa)
-    |> cast_assoc(:responsavel)
-
+    |> ajustar_cliente(attrs)
+    |> ajustar_etapa(attrs)
+    |> ajustar_responsavel(attrs)
   end
 
-
-
-  def ajustar_cliente(changeset) do
-    name = get_field(changeset, :cliente)
-
-
-    if name.id == nil do
-      put_change(changeset, :cliente, nil)
+  def ajustar_cliente(changeset, attrs) do
+    #criado para nao inserir novamente um cliente que ja vem com id do front
+    if attrs["cliente"]["id"] == nil do
+      cast_assoc(changeset, :cliente)
     else
-      changeset
+      put_change(changeset, :cliente_id, attrs["cliente"]["id"])
     end
   end
+
+  def ajustar_etapa(changeset, attrs) do
+    if attrs["etapa"]["id"] == nil do
+      cast_assoc(changeset, :etapa)
+    else
+      put_change(changeset, :etapa_id, attrs["etapa"]["id"])
+    end
+  end
+
+  def ajustar_responsavel(changeset, attrs) do
+    if attrs["responsavel"]["id"] == nil do
+      cast_assoc(changeset, :responsavel)
+    else
+      put_change(changeset, :responsavel_id, attrs["responsavel"]["id"])
+    end
+  end
+
 
 end
