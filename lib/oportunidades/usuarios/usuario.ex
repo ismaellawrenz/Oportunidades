@@ -16,7 +16,7 @@ defmodule Oportunidades.Usuarios.Usuario do
 
   def changeset(usuario, attrs) do
     usuario
-    |> cast(attrs, [:nome, :senha, :login, :funcao, :situacao])
+    |> cast(attrs, [:nome, :senha, :login, :funcao, :situacao, :id])
     |> validate_required([:nome])
   end
 

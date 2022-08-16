@@ -21,7 +21,7 @@ defmodule Oportunidades.Comercial.Cliente do
   @doc false
   def changeset(cliente, attrs) do
     cliente
-    |> cast(attrs, [:nome, :cnpj, :origemDescricao, :nomeFantasia, :origem, :telefones, :emails])
+    |> cast(attrs, [:nome, :cnpj, :origemDescricao, :nomeFantasia, :origem, :telefones, :emails, :id])
     |> validate_required([:nome])
     |> cast_assoc(:enderecos)
   end

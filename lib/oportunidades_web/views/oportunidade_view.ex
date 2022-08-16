@@ -41,7 +41,8 @@ defmodule OportunidadesWeb.OportunidadeView do
   def render("etapa.json", %{etapa: etapa}) do
     %{
       id: etapa.id,
-      descricao: etapa.descricao
+      descricao: etapa.descricao,
+      sequencia: etapa.sequencia
     }
   end
 

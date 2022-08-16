@@ -29,7 +29,7 @@ defmodule Oportunidades.Negocios.Oportunidade do
   @doc false
   def changeset(oportunidade, attrs) do
     oportunidade
-    |> cast(attrs, [:probabilidade, :situacao, :sequencia, :nome, :observacao, :motivoPerda, :total_unico, :total_mensal, :total_anual, :previsao_venda, :data_conclusao, :cliente_id])
+    |> cast(attrs, [:probabilidade, :situacao, :sequencia, :nome, :observacao, :motivoPerda, :total_unico, :total_mensal, :total_anual, :previsao_venda, :data_conclusao,:id])
     |> validate_required([:nome])
     |> cast_assoc(:etapa)
     |> cast_assoc(:cliente)
@@ -39,7 +39,7 @@ defmodule Oportunidades.Negocios.Oportunidade do
 
   def changeset_create(oportunidade, attrs) do
     oportunidade
-    |> cast(attrs, [:probabilidade, :situacao, :sequencia, :nome, :observacao, :motivoPerda, :total_unico, :total_mensal, :total_anual, :previsao_venda, :data_conclusao])
+    |> cast(attrs, [:probabilidade, :situacao, :sequencia, :nome, :observacao, :motivoPerda, :total_unico, :total_mensal, :total_anual, :previsao_venda, :data_conclusao, :id])
     |> validate_required([:nome])
     |> ajustar_cliente(attrs)
     |> ajustar_etapa(attrs)

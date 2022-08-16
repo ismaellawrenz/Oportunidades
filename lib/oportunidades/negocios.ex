@@ -37,7 +37,7 @@ defmodule Oportunidades.Negocios do
 
   """
 
-  def get_oportunidade!(id), do: Repo.get!(Oportunidade, id) |> Repo.preload([:cliente])
+  def get_oportunidade!(id), do: Repo.get!(Oportunidade, id) |> Repo.preload([:cliente, :etapa, :responsavel])
 
   @doc """
   Creates a oportunidade.
@@ -62,9 +62,6 @@ defmodule Oportunidades.Negocios do
         {:ok, oportunidade}
       end
 
-      # Map.put(cha.cliente, :cliente, %{id: 123})
-      # |> IO.inspect()
-
   end
 
   @doc """
@@ -80,9 +77,21 @@ defmodule Oportunidades.Negocios do
 
   """
   def update_oportunidade(%Oportunidade{} = oportunidade, attrs) do
-    oportunidade
-    |> Oportunidade.changeset(attrs)
-    |> Repo.update()
+    changeset =
+      %Oportunidade{}
+      |> Oportunidade.changeset(attrs)
+
+      IO.inspect(changeset)
+
+      Repo.update(changeset)
+
+    #with {:ok, %Oportunidade{} = oportunidade} <- Repo.update(changeset) do
+     # oportunidade = Map.put(oportunidade, :cliente, %{id: oportunidade.cliente_id, nome: attrs["cliente"]["nome"]})
+      #oportunidade = Map.put(oportunidade, :etapa, %{id: oportunidade.etapa_id, descricao: attrs["etapa"]["descricao"]})
+     # oportunidade = Map.put(oportunidade, :responsavel, %{id: oportunidade.responsavel_id, nome: attrs["responsavel"]["nome"]})
+     # {:ok, oportunidade}
+    #end
+
   end
 
   @doc """

@@ -13,7 +13,7 @@ defmodule Oportunidades.Etapas.Etapa do
   @doc false
   def changeset(etapa, attrs) do
     etapa
-    |> cast(attrs, [:sequencia, :descricao])
+    |> cast(attrs, [:sequencia, :descricao, :id])
     |> validate_required([:sequencia, :descricao])
   end
 end
