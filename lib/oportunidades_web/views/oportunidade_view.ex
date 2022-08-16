@@ -3,11 +3,11 @@ defmodule OportunidadesWeb.OportunidadeView do
   alias OportunidadesWeb.OportunidadeView
 
   def render("index.json", %{oportunidades: oportunidades}) do
-     render_many(oportunidades, OportunidadeView, "oportunidade.json")
+    render_many(oportunidades, OportunidadeView, "oportunidade.json")
   end
 
   def render("show.json", %{oportunidade: oportunidade}) do
-     render_one(oportunidade, OportunidadeView, "oportunidade.json")
+    render_one(oportunidade, OportunidadeView, "oportunidade.json")
   end
 
   def render("oportunidade.json", %{oportunidade: oportunidade}) do
@@ -26,10 +26,12 @@ defmodule OportunidadesWeb.OportunidadeView do
       data_conclusao: oportunidade.data_conclusao,
       cliente: render_one(oportunidade.cliente, OportunidadeView, "cliente.json", as: :cliente),
       etapa: render_one(oportunidade.etapa, OportunidadeView, "etapa.json", as: :etapa),
-      responsavel: render_one(oportunidade.responsavel, OportunidadeView, "responsavel.json", as: :responsavel)
+      responsavel:
+        render_one(oportunidade.responsavel, OportunidadeView, "responsavel.json",
+          as: :responsavel
+        )
     }
   end
-
 
   def render("cliente.json", %{cliente: cliente}) do
     %{
@@ -42,7 +44,7 @@ defmodule OportunidadesWeb.OportunidadeView do
     %{
       id: etapa.id,
       descricao: etapa.descricao,
-      sequencia: etapa.sequencia
+      sequencia: etapa["sequencia"]
     }
   end
 
