@@ -12,7 +12,8 @@ defmodule OportunidadesWeb.OportunidadeController do
   end
 
   def create(conn, oportunidade_params) do
-    with {:ok, %Oportunidade{}  = oportunidade} <- Negocios.create_oportunidade(oportunidade_params) do
+    with {:ok, %Oportunidade{} = oportunidade} <-
+           Negocios.create_oportunidade(oportunidade_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.oportunidade_path(conn, :show, oportunidade))
@@ -28,7 +29,8 @@ defmodule OportunidadesWeb.OportunidadeController do
   def update(conn, oportunidade_params) do
     oportunidade = Negocios.get_oportunidade!(oportunidade_params["id"])
 
-    with {:ok, %Oportunidade{} = oportunidade} <- Negocios.update_oportunidade(oportunidade, oportunidade_params) do
+    with {:ok, %Oportunidade{} = oportunidade} <-
+           Negocios.update_oportunidade(oportunidade, oportunidade_params) do
       render(conn, "show.json", oportunidade: oportunidade)
     end
   end
@@ -38,6 +40,12 @@ defmodule OportunidadesWeb.OportunidadeController do
 
     with {:ok, %Oportunidade{}} <- Negocios.delete_oportunidade(oportunidade) do
       send_resp(conn, :no_content, "")
+    end
+  end
+
+  def alterar_sequencia(conn, oportunidade_params) do
+    with {:ok, %Oportunidade{} = oportunidade} <- Negocios.alterar_sequencia(oportunidade_params) do
+      render(conn, "show.json", oportunidade: oportunidade)
     end
   end
 end

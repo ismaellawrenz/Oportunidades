@@ -120,6 +120,36 @@ defmodule Oportunidades.Negocios do
     end
   end
 
+  def alterar_sequencia(oportunidade) do
+    oportunidadeAntiga = get_oportunidade!(oportunidade["id"])
+
+    if oportunidade["id"] != oportunidadeAntiga["id"] do
+      Repo.update_all(
+        from(p in Oportunidade,
+          where:
+            p.etapa_id ==
+              ^oportunidadeAntiga["etapa"]["id"] and
+              p.sequencia > ^oportunidadeAntiga["etapa"]["sequencia"]
+        ),
+        inc: [sequencia: -1]
+      )
+
+      Repo.update_all(from(p in Oportunidade, where: p.id == ^oportunidade["id"]),
+        set: [etapa_id: oportunidade["etapa"]["id"], sequencia: oportunidade["sequencia"]]
+      )
+
+      Repo.update_all(
+        from(p in Oportunidade,
+          where:
+            p.etapa_id ==
+              ^oportunidade["etapa"]["id"] and p.sequencia >= ^oportunidade["sequencia"]
+        ),
+        inc: [sequencia: 1]
+      )
+    else
+    end
+  end
+
   @doc """
   Deletes a oportunidade.
   
