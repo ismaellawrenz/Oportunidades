@@ -44,7 +44,7 @@ defmodule OportunidadesWeb.OportunidadeController do
   end
 
   def alterar_sequencia(conn, oportunidade_params) do
-    with {:ok, oportunidade} <- Negocios.alterar_sequencia(oportunidade_params) do
+    with {:ok, %Oportunidade{} = oportunidade} <- Negocios.alterar_sequencia(oportunidade_params) do
       render(conn, "show.json", oportunidade: oportunidade)
     end
   end
