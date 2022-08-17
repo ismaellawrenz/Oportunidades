@@ -11,12 +11,12 @@ defmodule Oportunidades.Negocios do
 
   @doc """
   Returns the list of oportunidades.
-  
+
   ## Examples
-  
+
       iex> list_oportunidades()
       [%Oportunidade{}, ...]
-  
+
   """
   def list_oportunidades do
     Repo.all(Oportunidade)
@@ -24,17 +24,17 @@ defmodule Oportunidades.Negocios do
 
   @doc """
   Gets a single oportunidade.
-  
+
   Raises `Ecto.NoResultsError` if the Oportunidade does not exist.
-  
+
   ## Examples
-  
+
       iex> get_oportunidade!(123)
       %Oportunidade{}
-  
+
       iex> get_oportunidade!(456)
       ** (Ecto.NoResultsError)
-  
+
   """
 
   def get_oportunidade!(id),
@@ -42,15 +42,15 @@ defmodule Oportunidades.Negocios do
 
   @doc """
   Creates a oportunidade.
-  
+
   ## Examples
-  
+
       iex> create_oportunidade(%{field: value})
       {:ok, %Oportunidade{}}
-  
+
       iex> create_oportunidade(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
-  
+
   """
   def create_oportunidade(attrs \\ %{}) do
     changeset =
@@ -82,15 +82,15 @@ defmodule Oportunidades.Negocios do
 
   @doc """
   Updates a oportunidade.
-  
+
   ## Examples
-  
+
       iex> update_oportunidade(oportunidade, %{field: new_value})
       {:ok, %Oportunidade{}}
-  
+
       iex> update_oportunidade(oportunidade, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
-  
+
   """
   def update_oportunidade(%Oportunidade{} = oportunidade, attrs) do
     changeset =
@@ -123,13 +123,14 @@ defmodule Oportunidades.Negocios do
   def alterar_sequencia(oportunidade) do
     oportunidadeAntiga = get_oportunidade!(oportunidade["id"])
 
-    if oportunidade["id"] != oportunidadeAntiga["id"] do
+    if oportunidade["etapa"]["id"] != oportunidadeAntiga.etapa.id do
+      IO.inspect('entrou')
       Repo.update_all(
         from(p in Oportunidade,
           where:
             p.etapa_id ==
-              ^oportunidadeAntiga["etapa"]["id"] and
-              p.sequencia > ^oportunidadeAntiga["etapa"]["sequencia"]
+              ^oportunidadeAntiga.etapa.id and
+              p.sequencia > ^oportunidadeAntiga.etapa.sequencia
         ),
         inc: [sequencia: -1]
       )
@@ -148,19 +149,22 @@ defmodule Oportunidades.Negocios do
       )
     else
     end
+
+    {:ok, Map.from_struct(%Oportunidade{oportunidade})}
+    #IO.inspect({:ok, Map.from_struct(%Oportunidade{oportunidade})})
   end
 
   @doc """
   Deletes a oportunidade.
-  
+
   ## Examples
-  
+
       iex> delete_oportunidade(oportunidade)
       {:ok, %Oportunidade{}}
-  
+
       iex> delete_oportunidade(oportunidade)
       {:error, %Ecto.Changeset{}}
-  
+
   """
   def delete_oportunidade(%Oportunidade{} = oportunidade) do
     Repo.delete(oportunidade)
@@ -168,12 +172,12 @@ defmodule Oportunidades.Negocios do
 
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking oportunidade changes.
-  
+
   ## Examples
-  
+
       iex> change_oportunidade(oportunidade)
       %Ecto.Changeset{data: %Oportunidade{}}
-  
+
   """
   def change_oportunidade(%Oportunidade{} = oportunidade, attrs \\ %{}) do
     Oportunidade.changeset(oportunidade, attrs)

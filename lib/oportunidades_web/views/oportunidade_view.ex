@@ -44,7 +44,7 @@ defmodule OportunidadesWeb.OportunidadeView do
     %{
       id: etapa.id,
       descricao: etapa.descricao,
-      sequencia: etapa["sequencia"]
+      sequencia: etapa.sequencia
     }
   end
 
